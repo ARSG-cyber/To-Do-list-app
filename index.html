@@ -1,238 +1,147 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>TaskMaster Pro - Professional To-Do List</title>
+  <title>Minimalist Daily Planner</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Animated Background -->
-  <div class="animated-bg">
-    <div class="blob"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
-  </div>
-
-  <!-- Main Container -->
-  <div class="container">
-    <!-- Header Section -->
-    <header class="header">
-      <div class="header-content">
-        <div class="logo">
-          <i class="fas fa-tasks"></i>
-          <h1>TaskMaster <span class="gradient-text">Pro</span></h1>
-        </div>
-        <div class="theme-toggle">
-          <button id="theme-btn" class="theme-btn" title="Toggle Theme">
-            <i class="fas fa-moon"></i>
-          </button>
-        </div>
+  <div class="app-layout">
+    <!-- Header -->
+    <header class="app-header">
+      <div>
+        <h1 class="logo-title">My Tasks</h1>
+        <p class="logo-subtitle" id="date-display">Today</p>
       </div>
-      <p class="subtitle">Organize, prioritize, and conquer your goals</p>
+      <div class="header-right">
+        <span class="completion-pill" id="task-progress">0 of 0 done</span>
+        <button id="theme-btn" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+          <i class="fa-regular fa-moon"></i>
+        </button>
+      </div>
     </header>
 
-    <!-- Stats Dashboard -->
-    <div class="stats-dashboard">
-      <div class="stat-card">
-        <div class="stat-icon total">
-          <i class="fas fa-clipboard-list"></i>
-        </div>
-        <div class="stat-info">
-          <p class="stat-label">Total Tasks</p>
-          <p class="stat-value" id="stat-total">0</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon active">
-          <i class="fas fa-circle-notch"></i>
-        </div>
-        <div class="stat-info">
-          <p class="stat-label">Active</p>
-          <p class="stat-value" id="stat-active">0</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon completed">
-          <i class="fas fa-check-circle"></i>
-        </div>
-        <div class="stat-info">
-          <p class="stat-label">Completed</p>
-          <p class="stat-value" id="stat-completed">0</p>
-        </div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-icon high">
-          <i class="fas fa-fire"></i>
-        </div>
-        <div class="stat-info">
-          <p class="stat-label">High Priority</p>
-          <p class="stat-value" id="stat-high">0</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-      <!-- Add Task Section -->
-      <div class="add-task-section">
-        <div class="input-wrapper">
-          <i class="fas fa-plus"></i>
-          <input 
-            type="text" 
-            id="task-input" 
-            placeholder="Add a new task..." 
-            class="task-input"
-          >
-          <button id="add-btn" class="add-btn" title="Add Task">
-            <i class="fas fa-paper-plane"></i>
-          </button>
-        </div>
-        <div class="quick-options">
-          <div class="option-group">
-            <label for="priority-select">Priority</label>
-            <select id="priority-select" class="priority-select">
-              <option value="low">Low</option>
-              <option value="medium" selected>Medium</option>
-              <option value="high">High</option>
-            </select>
-          </div>
-          <div class="option-group">
-            <label for="due-date">Due Date</label>
-            <input type="date" id="due-date" class="due-date">
-          </div>
-          <div class="option-group">
-            <label for="category-select">Category</label>
-            <select id="category-select" class="category-select">
-              <option value="work">Work</option>
-              <option value="personal">Personal</option>
-              <option value="shopping">Shopping</option>
-              <option value="health">Health</option>
-              <option value="learning">Learning</option>
-            </select>
-          </div>
-        </div>
+    <!-- Create Task Form -->
+    <section class="task-creator">
+      <div class="input-line">
+        <input 
+          type="text" 
+          id="task-input" 
+          placeholder="Add a task, hit enter..." 
+          autocomplete="off"
+        >
+        <button id="add-btn" class="btn btn-primary">
+          <i class="fa-solid fa-plus"></i>
+        </button>
       </div>
 
-      <!-- Control Bar -->
-      <div class="control-bar">
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input 
-            type="text" 
-            id="search-input" 
-            placeholder="Search tasks..." 
-            class="search-input"
-          >
+      <div class="creator-details">
+        <div class="select-group">
+          <label for="priority-select">Priority</label>
+          <select id="priority-select">
+            <option value="low">Low</option>
+            <option value="medium" selected>Medium</option>
+            <option value="high">High</option>
+          </select>
         </div>
-        <div class="filter-buttons">
-          <button class="filter-btn active" data-filter="all">
-            <i class="fas fa-list"></i> All
-          </button>
-          <button class="filter-btn" data-filter="active">
-            <i class="fas fa-spinner"></i> Active
-          </button>
-          <button class="filter-btn" data-filter="completed">
-            <i class="fas fa-check"></i> Done
-          </button>
-          <button class="filter-btn" data-filter="high-priority">
-            <i class="fas fa-fire"></i> Urgent
-          </button>
+
+        <div class="select-group">
+          <label for="due-date">Due</label>
+          <input type="date" id="due-date">
         </div>
-        <div class="sort-buttons">
-          <button id="sort-by-date" class="sort-btn" title="Sort by Date">
-            <i class="fas fa-calendar"></i>
-          </button>
-          <button id="sort-by-priority" class="sort-btn" title="Sort by Priority">
-            <i class="fas fa-sort"></i>
-          </button>
+
+        <div class="select-group">
+          <label for="category-select">Category</label>
+          <select id="category-select">
+            <option value="work" selected>Work</option>
+            <option value="personal">Personal</option>
+            <option value="learning">Learning</option>
+          </select>
         </div>
       </div>
+    </section>
 
-      <!-- Tasks List -->
-      <div class="tasks-container">
-        <ul id="tasks-list" class="tasks-list">
-          <li class="empty-state">
-            <i class="fas fa-inbox"></i>
-            <p>No tasks yet. Add one to get started! 🚀</p>
-          </li>
-        </ul>
+    <!-- Filter & Search Toolbar -->
+    <section class="toolbar">
+      <div class="search-box">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="search-input" placeholder="Search tasks...">
       </div>
 
-      <!-- Footer -->
-      <footer class="footer">
-        <div class="footer-left">
-          <span id="task-progress" class="task-progress">0/0 completed</span>
-          <div class="progress-bar">
-            <div id="progress-fill" class="progress-fill"></div>
-          </div>
-        </div>
-        <div class="footer-actions">
-          <button id="clear-completed-btn" class="action-btn" title="Clear Completed Tasks">
-            <i class="fas fa-trash"></i> Clear Completed
-          </button>
-          <button id="export-btn" class="action-btn" title="Export Tasks">
-            <i class="fas fa-download"></i> Export
-          </button>
-        </div>
-      </footer>
-    </div>
+      <div class="filters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="active">Active</button>
+        <button class="filter-chip" data-filter="completed">Done</button>
+        <button class="filter-chip" data-filter="high-priority">Urgent</button>
+      </div>
+
+      <button id="sort-by-priority" class="icon-btn" title="Sort Priority">
+        <i class="fa-solid fa-arrow-down-short-wide"></i>
+      </button>
+    </section>
+
+    <!-- Task List -->
+    <main class="list-section">
+      <ul id="tasks-list" class="tasks-list">
+        <li class="empty-state">
+          <i class="fa-solid fa-feather-pointed"></i>
+          <p>All caught up! Type above to add a task.</p>
+        </li>
+      </ul>
+    </main>
+
+    <!-- Footer Summary -->
+    <footer class="app-footer">
+      <button id="clear-completed-btn" class="text-btn">Clear completed</button>
+      <button id="export-btn" class="text-btn"><i class="fa-solid fa-download"></i> Export JSON</button>
+    </footer>
   </div>
 
   <!-- Edit Task Modal -->
-  <div id="edit-modal" class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h2>Edit Task</h2>
-        <button class="modal-close" id="modal-close">
-          <i class="fas fa-times"></i>
-        </button>
+  <div id="edit-modal" class="modal-backdrop">
+    <div class="modal-card">
+      <div class="modal-top">
+        <h3>Edit Task</h3>
+        <button id="modal-close" class="icon-btn"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="edit-task-input">Task</label>
-          <input type="text" id="edit-task-input" class="form-input">
+      <div class="modal-content">
+        <div class="form-item">
+          <label for="edit-task-input">Title</label>
+          <input type="text" id="edit-task-input">
         </div>
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-item">
             <label for="edit-priority">Priority</label>
-            <select id="edit-priority" class="form-select">
+            <select id="edit-priority">
               <option value="low">Low</option>
               <option value="medium">Medium</option>
               <option value="high">High</option>
             </select>
           </div>
-          <div class="form-group">
+          <div class="form-item">
             <label for="edit-due-date">Due Date</label>
-            <input type="date" id="edit-due-date" class="form-input">
+            <input type="date" id="edit-due-date">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-item">
           <label for="edit-category">Category</label>
-          <select id="edit-category" class="form-select">
+          <select id="edit-category">
             <option value="work">Work</option>
             <option value="personal">Personal</option>
-            <option value="shopping">Shopping</option>
-            <option value="health">Health</option>
             <option value="learning">Learning</option>
           </select>
         </div>
-        <div class="form-group">
-          <label for="edit-description">Description</label>
-          <textarea id="edit-description" class="form-textarea" rows="3"></textarea>
-        </div>
       </div>
-      <div class="modal-footer">
-        <button id="modal-cancel" class="btn-secondary">Cancel</button>
-        <button id="modal-save" class="btn-primary">Save Changes</button>
+      <div class="modal-actions">
+        <button id="modal-cancel" class="btn btn-secondary">Cancel</button>
+        <button id="modal-save" class="btn btn-primary">Save</button>
       </div>
     </div>
   </div>
 
-  <!-- Toast Notification -->
-  <div id="toast" class="toast"></div>
+  <div id="toast" class="toast-box"></div>
 
   <script src="script.js"></script>
 </body>
